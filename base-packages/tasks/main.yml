@@ -1,0 +1,11 @@
+---
+# tasks file for base-packages
+- name: Install a list of packages with a list variable
+  ansible.builtin.yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: true
+  vars:
+    packages:
+      - git
+      - docker

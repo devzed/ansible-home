@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+
+  tasks:
+
+    - name: Install VS Code repo (dnf)
+      become: true
+      ansible.builtin.yum_repository:
+        name: code
+        description: Visual Studio Code repo
+        file: vscode_repository
+        baseurl: 'https://packages.microsoft.com/yumrepos/vscode'
+        gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
+        gpgcheck: yes
+
+    - name: Install VS Code (dnf)
+      become: true
+      ansible.builtin.dnf:
+        name: code
+        state: latest
+
+    - name: Install VSCode extensions
+      become: true
+      become_user: 'zed'
+      visual_studio_code_install_extension:
+        executable: 'code'
+        name: 'python'
